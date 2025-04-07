@@ -1,14 +1,29 @@
-from masks import get_mask_card_number
+from masks import get_mask_card_number, get_mask_account
 from datetime import datetime
 
 
-def mask_account_card(string: str) -> tuple[str, str]:
+def mask_account_card(all_name_card: str | int) -> str | int:
     """ Маскировка номера карты и счета """
-    string_split = string.split()
-    name_card_or_score = " ".join(string_split[:2])
-    number_card_or_score = string_split[-1]
+    new_list = all_name_card.split(' ')
+    card_num = []
+    card_alph = []
 
-    return name_card_or_score, number_card_or_score
+    for i in new_list:
+        if i.isalpha():
+            card_alph.append(i)
+        elif i == ' ':
+            card_alph.append(i)
+        else:
+            card_num.append(i)
+
+    name_letter_card = ''.join(card_alph)
+
+    if name_letter_card == "Счет":
+        name_number_card = get_mask_account(''.join(card_num))
+    else:
+        name_number_card = get_mask_card_number(''.join(card_num))
+
+    return f'{name_letter_card} {name_number_card}'
 
 
 def get_date(inp_inf):
@@ -18,9 +33,7 @@ def get_date(inp_inf):
 
 
 test = "Visa Platinum 7000792289606361"
-name_card, card_number = mask_account_card(test)
 
 
-masked_number = get_mask_card_number(card_number)
-print(f"{name_card}: {masked_number}")
+print(mask_account_card(test))
 print(get_date('2024-03-11T02:26:18.671407'))
