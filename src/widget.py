@@ -1,6 +1,7 @@
 from masks import get_mask_card_number
 from datetime import datetime
 
+
 def mask_account_card(string: str) -> tuple[str, str]:
     """ Маскировка номера карты и счета """
     string_split = string.split()
@@ -11,8 +12,9 @@ def mask_account_card(string: str) -> tuple[str, str]:
 
 
 def get_date(inp_inf):
+    """Изменение формата даты"""
     date_inf = datetime.strptime(inp_inf[:10], '%Y-%m-%d')
-    return f'{date_inf.day:02}:{date_inf.month:02}:{date_inf.year} '
+    return f'{date_inf.day:02}.{date_inf.month:02}.{date_inf.year} '
 
 
 test = "Visa Platinum 7000792289606361"
